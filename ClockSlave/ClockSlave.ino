@@ -31,13 +31,13 @@ void setup()
 
 void loop()
 {
-	if(Serial.available() >= 9)
+	if(Serial.available() >= 180)
 	{
 		digitalWrite(13, HIGH);
 
 		memset(rgbData, 0, 180);
 
-		Serial.readBytes(readBuffer, 9);
+		Serial.readBytes(readBuffer, 180);
 		memcpy(rgbData, readBuffer, 180);
 
 		rgbOut(rgbData, 60);
