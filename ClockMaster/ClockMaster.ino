@@ -6,8 +6,8 @@ SoftwareSerial slaveComms(10, 11);
 
 void setup()
 {
-	Serial.begin(9600); // Serial to PC
-	Serial.println("Initializing slave");
+	//Serial.begin(9600); // Serial to PC
+	//Serial.println("Initializing slave");
 
 	slaveComms.begin(9600);
 
@@ -21,14 +21,14 @@ void loop()
 
 	if (on)
 	{
-		Serial.write(127);
-		slaveComms.write(127);
+		//Serial.print("AAA");
+		slaveComms.print("AAA");
 		digitalWrite(13, HIGH);
 	}
 	else
 	{
-		Serial.write(1);
-		slaveComms.write(1);
+		//Serial.print("   ");
+		slaveComms.print("   ");
 		digitalWrite(13, LOW);
 	}
 

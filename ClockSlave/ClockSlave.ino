@@ -10,37 +10,35 @@
 DEFINE_WS2811_FN(rgbOut, PORTB, 0)
 
 RGB_t rgbData[60];
+char readBuffer[180];
 
 void setup()
 {
     SET_BIT_HI(DDRB, 0);
     SET_BIT_LO(PORTB, 0);
 
-	for (int i = 0; i < 60; ++i)
-	{
-		rgbData[i].r = rgbData[i].g = rgbData[i].b = 32;
-	}
+	memset(rgbData, 1, 180);
+	memset(readBuffer, 0, 180);
+
 	rgbOut(rgbData, 60);
 
 	pinMode(13, OUTPUT);
+	digitalWrite(13, LOW);
 
 	Serial.begin(9600);
 }
 
+
 void loop()
 {
-	char readBuffer[1];
-	
-	if(Serial.available() > 0)
+	if(Serial.available() >= 9)
 	{
 		digitalWrite(13, HIGH);
 
-		Serial.readBytes(readBuffer, 1);
+		memset(rgbData, 0, 180);
 
-		for (int i = 0; i < 60; ++i)
-		{
-			rgbData[i].r = rgbData[i].g = rgbData[i].b = readBuffer[0];
-		}
+		Serial.readBytes(readBuffer, 9);
+		memcpy(rgbData, readBuffer, 180);
 
 		rgbOut(rgbData, 60);
 

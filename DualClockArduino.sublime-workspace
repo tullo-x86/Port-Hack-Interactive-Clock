@@ -8,26 +8,10 @@
 	"buffers":
 	[
 		{
-			"file": "ClockMaster/ClockMaster.ino",
-			"settings":
-			{
-				"buffer_size": 509,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "ClockSlave/ClockSlave.ino",
 			"settings":
 			{
 				"buffer_size": 841,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "ClockSlave/WS2811.h",
-			"settings":
-			{
-				"buffer_size": 5560,
 				"line_ending": "Unix"
 			}
 		}
@@ -59,6 +43,9 @@
 	},
 	"file_history":
 	[
+		"/home/tullo/sketchbook/ClockSlave/ClockSlave.ino",
+		"/home/tullo/sketchbook/ClockSlave/WS2811.h",
+		"/home/tullo/sketchbook/ClockMaster/ClockMaster.ino",
 		"/home/tullo/Arduino/Clock/Clock.ino",
 		"/home/tullo/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/tullo/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
@@ -97,38 +84,11 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "ClockMaster/ClockMaster.ino",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 509,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								231,
-								231
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "ClockSlave/ClockSlave.ino",
 					"semi_transient": false,
 					"settings":
@@ -140,40 +100,14 @@
 						"selection":
 						[
 							[
-								823,
-								823
+								162,
+								162
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 207.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "ClockSlave/WS2811.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5560,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5364,
-								5364
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
