@@ -15,22 +15,22 @@ void setup()
 }
 
 bool on = false;
+const uint8_t bright[9] = { 255, 0, 0, 0, 255, 0, 0, 0, 255};
+const uint8_t dim[9] = { 32, 0, 0, 0, 32, 0, 0, 0, 32};
 void loop()
 {
 	on = !on;
 
 	if (on)
 	{
-		//Serial.print("AAA");
-		slaveComms.print("AAA");
+		slaveComms.write(bright, 9);
 		digitalWrite(13, HIGH);
 	}
 	else
 	{
-		//Serial.print("   ");
-		slaveComms.print("   ");
+		slaveComms.write(dim, 9);
 		digitalWrite(13, LOW);
 	}
 
-	delay(1000);
+	delay(100);
 }
