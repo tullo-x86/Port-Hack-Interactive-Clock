@@ -9,8 +9,11 @@
 
 DEFINE_WS2811_FN(rgbOut, PORTB, 0)
 
+#define BUFFER_LENGTH 20
+#define PACKET_LENGTH 12
+
 RGB_t rgbData[60];
-char readBuffer[24];
+char readBuffer[64];
 
 void setup()
 {
@@ -30,17 +33,12 @@ void setup()
 
 void loop()
 {
-    if(Serial.available() >= 20)
+    if(Serial.available() >= BUFFER_LENGTH)
     {
         // Reading
         digitalWrite(13, HIGH);
 
-        Serial.readBytes(readBuffer, 20);
-        int overflow = Serial.available();
-        if (overflow)
-        {
-            Serial.readBytes(readBuffer + 20, overflow);
-        }
+        Serial.readBytes(readBuffer, Serial.available());
 
         // Done reading
         digitalWrite(13, LOW);
@@ -49,7 +47,7 @@ void loop()
         while (*readFrom == 0xFE)
             readFrom++;
 
-        //memcpy(rgbData, readFrom, 12);
+        memcpy(rgbData, readFrom, PACKET_LENGTH);
 
         rgbOut(rgbData, 60);
     }

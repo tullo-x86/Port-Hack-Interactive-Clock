@@ -5,17 +5,17 @@
 SoftwareSerial slaveComms(10, 11);
 
 #define BUFFER_LENGTH 20
-#define START_PADDING 4
-#define END_PADDING 4
+#define START_PADDING 0
+#define END_PADDING 8
 #define DATA_LENGTH (BUFFER_LENGTH - START_PADDING - END_PADDING)
 
 unsigned char writeBuffer[BUFFER_LENGTH];
-unsigned char *packetData = writeBuffer + 2;
+unsigned char *packetData = writeBuffer + START_PADDING;
 
 void setup()
 {
     delay(500);
-    slaveComms.begin(9600);
+    slaveComms.begin(9600); 
 
     pinMode(13, OUTPUT);
 
@@ -31,10 +31,10 @@ unsigned char onData[DATA_LENGTH] = {
     0x00, 0x00, 0x30
 };
 unsigned char offData[DATA_LENGTH] = {
-    0x01, 0x01, 0x01,
-    0x01, 0x01, 0x01,
-    0x01, 0x01, 0x01,
-    0x01, 0x01, 0x01
+    0x07, 0x07, 0x07,
+    0x07, 0x07, 0x07,
+    0x07, 0x07, 0x07,
+    0x07, 0x07, 0x07
 };
 
 void loop()
