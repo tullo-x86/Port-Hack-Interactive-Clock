@@ -4,33 +4,53 @@
 
 SoftwareSerial slaveComms(10, 11);
 
+#define BUFFER_LENGTH 20
+#define START_PADDING 4
+#define END_PADDING 4
+#define DATA_LENGTH (BUFFER_LENGTH - START_PADDING - END_PADDING)
+
+unsigned char writeBuffer[BUFFER_LENGTH];
+unsigned char *packetData = writeBuffer + 2;
+
 void setup()
 {
-	//Serial.begin(9600); // Serial to PC
-	//Serial.println("Initializing slave");
+    delay(500);
+    slaveComms.begin(9600);
 
-	slaveComms.begin(9600);
+    pinMode(13, OUTPUT);
 
-	pinMode(13, OUTPUT);
+    memset(writeBuffer, 0xFE, BUFFER_LENGTH);
 }
 
 bool on = false;
-const uint8_t bright[9] = { 255, 0, 0, 0, 255, 0, 0, 0, 255};
-const uint8_t dim[9] = { 32, 0, 0, 0, 32, 0, 0, 0, 32};
+
+unsigned char onData[DATA_LENGTH] = {
+    0x01, 0x01, 0x01,
+    0x30, 0x00, 0x00,
+    0x00, 0x30, 0x00,
+    0x00, 0x00, 0x30
+};
+unsigned char offData[DATA_LENGTH] = {
+    0x01, 0x01, 0x01,
+    0x01, 0x01, 0x01,
+    0x01, 0x01, 0x01,
+    0x01, 0x01, 0x01
+};
+
 void loop()
 {
-	on = !on;
+    if (on = !on)
+    {
+        memcpy(packetData, onData, DATA_LENGTH);
+    }
+    else
+    {
+        memcpy(packetData, offData, DATA_LENGTH);
+    }
 
-	if (on)
-	{
-		slaveComms.write(bright, 9);
-		digitalWrite(13, HIGH);
-	}
-	else
-	{
-		slaveComms.write(dim, 9);
-		digitalWrite(13, LOW);
-	}
+    digitalWrite(13, HIGH);
+    slaveComms.write(writeBuffer, BUFFER_LENGTH);
+    digitalWrite(13, LOW);
 
-	delay(100);
+    delay(700);
 }

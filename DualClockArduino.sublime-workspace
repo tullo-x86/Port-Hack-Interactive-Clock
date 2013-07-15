@@ -11,7 +11,15 @@
 			"file": "ClockSlave/ClockSlave.ino",
 			"settings":
 			{
-				"buffer_size": 841,
+				"buffer_size": 800,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ClockMaster/ClockMaster.ino",
+			"settings":
+			{
+				"buffer_size": 601,
 				"line_ending": "Unix"
 			}
 		}
@@ -93,20 +101,48 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 841,
+						"buffer_size": 800,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								162,
-								162
+								568,
+								568
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 207.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "ClockMaster/ClockMaster.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 601,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								598,
+								598
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
