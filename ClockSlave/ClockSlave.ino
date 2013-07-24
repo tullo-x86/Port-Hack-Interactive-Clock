@@ -14,6 +14,7 @@ DEFINE_WS2811_FN(rgbOut, PORTB, 0)
 
 RGB_t rgbData[60];
 char readBuffer[64];
+char packet[PACKET_LENGTH];
 
 void setup()
 {
@@ -47,10 +48,15 @@ void loop()
         while (*readFrom == 0xFE)
             readFrom++;
 
-        memcpy(rgbData, readFrom, PACKET_LENGTH);
+        memcpy(packet, readFrom, PACKET_LENGTH);
 
-        rgbOut(rgbData, 60);
+        setClockHands(packet);
     }
 
     delay(10);
+}
+
+void setClockHands(char[] packet)
+{
+    
 }

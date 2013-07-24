@@ -1,91 +1,98 @@
+// Port Hack Interactive Clock - Master
+// Copyright Daniel Tullemans 2013
+#include <SoftwareSerial.h>
 
-#include <SPI.h>         
+//#include <SPI.h>         
 #include <Ethernet.h>
 #include <EthernetUdp.h>
 
-// Enter a MAC address for your controller below.
-// Newer Ethernet shields have a MAC address printed on a sticker on the shield
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+#include <Time.h>
+
+SoftwareSerial slaveComms(10, 11);
+
+#define BUFFER_LENGTH 20
+#define START_PADDING 0
+#define END_PADDING 8
+#define DATA_LENGTH (BUFFER_LENGTH - START_PADDING - END_PADDING)
+
+unsigned char writeBuffer[BUFFER_LENGTH];
+unsigned char *packetData = writeBuffer + START_PADDING;
+
+byte mac[] = { 0x71, 0xCC, 0x70, 0xCC, 0xDE, 0xAD };
 byte myIP[] = { 192, 168, 1, 210 };
 
 unsigned int localPort = 123;      // local port to listen for UDP packets
 
 IPAddress timeServer(192, 168, 1, 233); // `perception` wired ethernet
 
-const int NTP_PACKET_SIZE= 48; // NTP time stamp is in the first 48 bytes of the message
+const int NTP_PACKET_SIZE = 48; // NTP time stamp is in the first 48 bytes of the message
 
-byte packetBuffer[ NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing packets 
+byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing packets 
 
 // A UDP instance to let us send and receive packets over UDP
 EthernetUDP Udp;
 
 void setup() 
 {
- // Open serial communications and wait for port to open:
-    Serial.begin(9600);
-     while (!Serial) {
-        ; // wait for serial port to connect. Needed for Leonardo only
-    }
+    memset(writeBuffer, 0xFE, BUFFER_LENGTH);
+    memset(packetData, 0x00, DATA_LENGTH);
 
+    // Wait for the EtherTen to initialise
     delay(3000);
 
     Ethernet.begin(mac, myIP);
     Udp.begin(localPort);
+
+    slaveComms.begin(9600);
+
+    makeNtpRequest(timeServer); // send an NTP packet to a time server
+    timeout = millis() + 1000;
+}
+
+unsigned long timeout;
+
+void advanceTimeout() {
+    timeout += 1000;
 }
 
 void loop()
 {
-    makeNtpRequest(timeServer); // send an NTP packet to a time server
+    if (Udp.parsePacket())
+        setTimeFromResponse();
 
-    // wait to see if a reply is available
-    delay(100);  
-    if (Udp.parsePacket()) 
-        receiveNtpPacket();
-    
-    // wait ten seconds before asking for the time again
-    delay(9900); 
+    if (millis() > timeout)
+    {
+        advanceTimeout();
+        updateSlave();
+    }
+
+    delay(100);
 }
 
-void receiveNtpPacket()
+void updateSlave()
+{
+    unsigned long theTime = now();
+    memcpy(packetData, &theTime, sizeof(unsigned long));
+    slaveComms.write(writeBuffer, BUFFER_LENGTH);
+}
+
+void setTimeFromResponse()
 {  
     // We've received a packet, read the data from it
     Udp.read(packetBuffer,NTP_PACKET_SIZE);  // read the packet into the buffer
 
     //the timestamp starts at byte 40 of the received packet and is four bytes,
     // or two words, long. First, esxtract the two words:
-
     unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
     unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);  
     // combine the four bytes (two words) into a long integer
     // this is NTP time (seconds since Jan 1 1900):
-    unsigned long secsSince1900 = highWord << 16 | lowWord;  
-    Serial.print("Seconds since Jan 1 1900 = " );
-    Serial.println(secsSince1900);               
+    unsigned long secsSince1900 = highWord << 16 | lowWord;
 
-    // now convert NTP time into everyday time:
-    Serial.print("Unix time = ");
-    // Unix time starts on Jan 1 1970. In seconds, that's 2208988800:
-    const unsigned long seventyYears = 2208988800UL;     
-    // subtract seventy years:
-    unsigned long epoch = secsSince1900 - seventyYears;  
-    // print Unix time:
-    Serial.println(epoch);
+    const unsigned long seventyYears = 2208988800UL;
+    unsigned long epoch = secsSince1900 - seventyYears;
 
-    // print the hour, minute and second:
-    Serial.print("The UTC time is ");       // UTC is the time at Greenwich Meridian (GMT)
-    Serial.print((epoch  % 86400L) / 3600); // print the hour (86400 equals secs per day)
-    Serial.print(':');  
-    if ( ((epoch % 3600) / 60) < 10 ) {
-        // In the first 10 minutes of each hour, we'll want a leading '0'
-        Serial.print('0');
-    }
-    Serial.print((epoch  % 3600) / 60); // print the minute (3600 equals secs per minute)
-    Serial.print(':'); 
-    if ( (epoch % 60) < 10 ) {
-        // In the first 10 seconds of each minute, we'll want a leading '0'
-        Serial.print('0');
-    }
-    Serial.println(epoch %60); // print the second
+    setTime(epoch);
 }
 
 // send an NTP request to the time server at the given address 
