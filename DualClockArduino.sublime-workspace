@@ -11,7 +11,23 @@
 			"file": "ClockSlave/ClockSlave.ino",
 			"settings":
 			{
-				"buffer_size": 1054,
+				"buffer_size": 1127,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/tullo/Arduino/Clock/Clock.ino",
+			"settings":
+			{
+				"buffer_size": 2295,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/usr/share/arduino/libraries/Time/Time.h",
+			"settings":
+			{
+				"buffer_size": 6482,
 				"line_ending": "Unix"
 			}
 		},
@@ -27,7 +43,7 @@
 			"file": "ClockMasterNtpClient/ClockMasterNtpClient.ino",
 			"settings":
 			{
-				"buffer_size": 3980,
+				"buffer_size": 3443,
 				"line_ending": "Unix"
 			}
 		}
@@ -59,6 +75,8 @@
 	},
 	"file_history":
 	[
+		"/home/tullo/Downloads/Time/Examples/Processing/SyncArduinoClock/SyncArduinoClock.pde",
+		"/usr/share/arduino/libraries/Time/Time.h",
 		"/home/tullo/sketchbook/UdpNtpClient/UdpNtpClient.ino",
 		"/home/tullo/sketchbook/ClockSlave/ClockSlave.ino",
 		"/home/tullo/sketchbook/ClockSlave/WS2811.h",
@@ -70,7 +88,7 @@
 	],
 	"find":
 	{
-		"height": 31.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
@@ -84,6 +102,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"setTimeoutForNextInterval",
+			"receiveAndParseTime",
+			"receiveNtpPacket",
+			"now()",
 			"myIP",
 			"myIp",
 			"IP",
@@ -107,7 +129,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -116,15 +138,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1054,
+						"buffer_size": 1127,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								594,
-								594
+								1124,
+								1124
 							]
 						],
 						"settings":
@@ -137,13 +159,71 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 276.0,
+						"translation.y": 552.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "/home/tullo/Arduino/Clock/Clock.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1985,
+								1985
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1173.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/usr/share/arduino/libraries/Time/Time.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6482,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5648,
+								5648
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1472.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "ClockMaster/ClockMaster.ino",
 					"semi_transient": false,
 					"settings":
@@ -155,8 +235,8 @@
 						"selection":
 						[
 							[
-								1079,
-								1079
+								510,
+								510
 							]
 						],
 						"settings":
@@ -169,26 +249,26 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 759.0,
+						"translation.y": 552.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "ClockMasterNtpClient/ClockMasterNtpClient.ino",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3980,
+						"buffer_size": 3443,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2723,
-								2723
+								1559,
+								1559
 							]
 						],
 						"settings":
@@ -198,7 +278,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1173.0,
+						"translation.y": 1035.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

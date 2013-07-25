@@ -2,7 +2,7 @@
 // Copyright Daniel Tullemans 2013
 #include <SoftwareSerial.h>
 
-//#include <SPI.h>         
+#include <SPI.h>         
 #include <Ethernet.h>
 #include <EthernetUdp.h>
 
@@ -32,6 +32,8 @@ byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing packe
 // A UDP instance to let us send and receive packets over UDP
 EthernetUDP Udp;
 
+unsigned long timeout;
+
 void setup() 
 {
     memset(writeBuffer, 0xFE, BUFFER_LENGTH);
@@ -46,15 +48,14 @@ void setup()
     slaveComms.begin(9600);
 
     makeNtpRequest(timeServer); // send an NTP packet to a time server
-    timeout = millis() + 1000;
+    timeout = millis() + 3000;
 }
-
-unsigned long timeout;
 
 void advanceTimeout() {
     timeout += 1000;
 }
 
+bool timeHasBeenSet = false;
 void loop()
 {
     if (Udp.parsePacket())
@@ -63,10 +64,11 @@ void loop()
     if (millis() > timeout)
     {
         advanceTimeout();
-        updateSlave();
+        if(timeSet)
+            updateSlave();
     }
 
-    delay(100);
+    delay(1000);
 }
 
 void updateSlave()
@@ -93,6 +95,7 @@ void setTimeFromResponse()
     unsigned long epoch = secsSince1900 - seventyYears;
 
     setTime(epoch);
+    timeHasBeenSet = true;
 }
 
 // send an NTP request to the time server at the given address 
